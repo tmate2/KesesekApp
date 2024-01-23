@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">KesesekApp</string>
+    <string name="add_item">Új járat hozzáadása</string>
+    <string name="scheduled_arrival">Menetrend szerinti érkezés</string>
+    <string name="actual_arrival">Tényleges érkezés</string>
+    <string name="date_of_travel">Utazás dátuma</string>
+    <string name="back">Vissza</string>
+    <string name="add">Hozzáadás</string>
+    <string name="next_day">Másnapi érkezés</string>
+    <string name="flight_text">Járat</string>
+    <string name="flight_example">pl: Debrecen - Nyíregyháza (65432)</string>
 </resources>
