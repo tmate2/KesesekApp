@@ -2,6 +2,7 @@
     <string name="app_name">KesesekApp</string>
     <string name="add_item">Új járat hozzáadása</string>
     <string name="scheduled_arrival">Menetrend szerinti érkezés</string>
+    <string name="scheduled_arrival_input">Menetrend szerint</string>
     <string name="actual_arrival">Tényleges érkezés</string>
     <string name="date_of_travel">Utazás dátuma</string>
     <string name="back">Vissza</string>
