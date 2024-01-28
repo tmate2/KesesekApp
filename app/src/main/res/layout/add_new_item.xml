@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="@drawable/popup_border_bg"
     android:layout_margin="8dp"
+    android:overScrollMode="ifContentScrolls"
     android:id="@+id/addNewItemLayout" >
 
     <TextView
@@ -160,9 +161,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/flight_example"
-            android:inputType="text"
             android:autofillHints=""
             android:ems="10"
+            android:inputType="text"
+            android:text=""
             />
     </LinearLayout>
 

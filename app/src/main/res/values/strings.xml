@@ -10,4 +10,5 @@
     <string name="next_day">Másnapi érkezés</string>
     <string name="flight_text">Járat</string>
     <string name="flight_example">pl: Debrecen - Nyíregyháza (65432)</string>
+    <string name="toast_message">Töltsd ki a dátum és idő mezőket a hozzáadáshoz!</string>
 </resources>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/volan_yellow"
-    android:id="@+id/parent_layout" >
+    android:id="@+id/parent_layout">
 
     <Button
         android:id="@+id/gomboc"
@@ -13,6 +13,14 @@
         android:text="@string/add"
         android:backgroundTint="@color/mav_blue"
         android:textColor="@color/volan_yellow"
+        />
+
+    <TextView
+        android:id="@+id/mrTextField"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:text=""
+        android:scrollbars="vertical"
         />
 
 </RelativeLayout>

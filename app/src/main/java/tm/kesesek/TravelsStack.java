@@ -62,6 +62,9 @@ public class TravelsStack implements Serializable {
     }
 
 
+    public boolean isEmpty() {
+        return travelsStack.isEmpty();
+    }
 
     public int getGreatestLate() {
         return greatestLate;
