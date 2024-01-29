@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:background="@color/white">
+
+
+    <EditText
+        android:id="@+id/textDialogInput"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/flight_example"
+        android:inputType="text"
+        android:text=""
+        android:textColor="@color/black"
+        />
+
+
+</LinearLayout>

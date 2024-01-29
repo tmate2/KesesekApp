@@ -100,7 +100,7 @@ public class TravelsStack implements Serializable {
             return "Még nem vettél fel utazást";
 
         for(int i = travelsStack.size(); i > 0; i--)
-            stringBuilder.append(i).append(".\t").append(travelsStack.get(i-1).toString()).append("\n");
+            stringBuilder.append(i).append(".\t\t").append(travelsStack.get(i-1).toString()).append("\n");
 
         return stringBuilder.toString();
     }

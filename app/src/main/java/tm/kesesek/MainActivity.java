@@ -3,6 +3,7 @@ package tm.kesesek;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +27,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    //TODO: activity_main-t megcsinálni!!!
 
     private RelativeLayout parent;
     private TravelsStack travelsStack;
@@ -55,25 +57,43 @@ public class MainActivity extends AppCompatActivity {
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-        popupWindow.showAtLocation(parent, Gravity.TOP, 40, 0);
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
         LocalTime[] scheduledTime = new LocalTime[1];
         EditText scheduledTimeInput = view.findViewById(R.id.scheduledClockInput);
-
-        scheduledTimeInput.setOnFocusChangeListener((x, hasFocus) -> timeDialog(view, scheduledTime, scheduledTimeInput));
-        scheduledTimeInput.setOnClickListener(x -> timeDialog(view, scheduledTime, scheduledTimeInput));
+        scheduledTimeInput.setOnFocusChangeListener((x, hasFocus) -> {
+            if (hasFocus) {
+                timeDialog(view, scheduledTime, scheduledTimeInput);
+                scheduledTimeInput.setOnClickListener(y -> timeDialog(view, scheduledTime, scheduledTimeInput));
+            }
+        });
 
         LocalTime[] actualTime = new LocalTime[1];
         EditText actualTimeInput = view.findViewById(R.id.actualClockInput);
-
-        actualTimeInput.setOnFocusChangeListener((x, hasFocus) -> timeDialog(view, actualTime, actualTimeInput));
-        actualTimeInput.setOnClickListener(x -> timeDialog(view, actualTime, actualTimeInput));
+        actualTimeInput.setOnFocusChangeListener((x, hasFocus) -> {
+            if (hasFocus) {
+                timeDialog(view, actualTime, actualTimeInput);
+                actualTimeInput.setOnClickListener(y -> timeDialog(view, actualTime, actualTimeInput));
+            }
+        });
 
         LocalDate[] travelDate = new LocalDate[1];
         EditText dateTextField = view.findViewById(R.id.travelDateInput);
+        dateTextField.setOnFocusChangeListener((x, hasFocus) -> {
+            if (hasFocus) {
+                dateDialog(view, travelDate, dateTextField);
+                dateTextField.setOnClickListener(y -> dateDialog(view, travelDate, dateTextField));
+            }
+        });
 
-        dateTextField.setOnFocusChangeListener((x, hasFocus) -> dateDialog(view, travelDate, dateTextField));
-        dateTextField.setOnClickListener(x -> dateDialog(view, travelDate, dateTextField));
+        EditText flightText = view.findViewById(R.id.flightInfoInput);
+        String[] flightInfo = new String[1];
+        flightText.setOnFocusChangeListener((x, hasFocus) -> {
+            if (hasFocus) {
+                textDialog(view, flightInfo, flightText);
+                flightText.setOnClickListener(y -> textDialog(view, flightInfo, flightText));
+            }
+        });
 
         Button add = view.findViewById(R.id.addBtn);
         add.setOnClickListener(x -> {
@@ -83,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Switch sw = view.findViewById(R.id.nextDaySwitch);
-            EditText flightText = view.findViewById(R.id.flightInfoInput);
-            travelsStack.addNewTravel(new Travel(scheduledTime[0], actualTime[0], travelDate[0], sw.isChecked(), flightText.getText().toString()));
+
+            travelsStack.addNewTravel(new Travel(scheduledTime[0], actualTime[0], travelDate[0], sw.isChecked(), (flightInfo[0] != null ? flightInfo[0] : "") ));
             System.out.println(travelsStack);
 
             updateStack();
@@ -96,19 +116,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void timeDialog(View view, LocalTime[] localTime, EditText editText) {
+    private void timeDialog(View view, LocalTime[] localTime, EditText editText) {
         boolean format24 = true;
         TimePickerDialog dialog = new TimePickerDialog(view.getContext(), android.R.style.Theme_Holo_Light_Dialog, (timePicker, hour, min) -> {
             localTime[0] = LocalTime.of(hour, min);
             String time = hour + ":" + (min < 10 ? ("0" + min) : min);
             editText.setText(time);
-        }, LocalTime.now().getHour() + 1, LocalTime.now().getMinute(), format24);
+        }, LocalTime.now().getHour(), LocalTime.now().getMinute(), format24);
 
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
     }
 
-    public void dateDialog(View view, LocalDate[] localDate, EditText editText) {
+    private void dateDialog(View view, LocalDate[] localDate, EditText editText) {
         DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Light_Dialog, (datePicker, year, month, day) -> {
             localDate[0] = LocalDate.of(year, month + 1, day);
             String output = year + ". " + (month < 9 ? "0" + (month + 1) : (month + 1)) + ". " + (day < 9 ? "0" + day : day);
@@ -117,6 +137,24 @@ public class MainActivity extends AppCompatActivity {
 
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
+    }
+
+    //TODO: a dialog EditText-je kapjon egyből fókuszt + billentyűzetet
+    private void textDialog(View view, String[] flight, EditText editText) {
+        View viewDialog = View.inflate(view.getContext(), R.layout.text_dialog, null);
+        EditText textInput = viewDialog.findViewById(R.id.textDialogInput);
+        textInput.setText(editText.getText().toString());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setView(viewDialog);
+        builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+            flight[0] = textInput.getText().toString();
+            editText.setText(flight[0]);
+            dialogInterface.dismiss();
+        });
+        builder.setNegativeButton(R.string.back, (dialogInterface, i) -> dialogInterface.dismiss());
+
+        builder.show();
     }
 
     private void checkStack() {
@@ -142,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
          */
         if (travelsStack.isEmpty())
             return;
-        System.out.println("pass");
         mrText.setText(travelsStack.toString());
     }
 

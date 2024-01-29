@@ -5,6 +5,7 @@
     <string name="scheduled_arrival_input">Menetrend szerint</string>
     <string name="actual_arrival">Tényleges érkezés</string>
     <string name="date_of_travel">Utazás dátuma</string>
+    <string name="ok">OK</string>
     <string name="back">Vissza</string>
     <string name="add">Hozzáadás</string>
     <string name="next_day">Másnapi érkezés</string>
